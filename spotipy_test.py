@@ -7,7 +7,20 @@ import time
 import matplotlib.pyplot as plt
 import os
 
+
+
 def get_playlist_id(token, username, playlist_id):
+    '''
+    inputs: 
+        token: authentication token
+        username: string, spotify username
+        playlist_id: string, playlist name
+    
+    returns:
+        pid: playlist id
+        sp: spotipy instance
+
+    '''
     if token:
         sp = spotipy.Spotify(auth=token)
         results = sp.current_user_playlists()
@@ -26,7 +39,7 @@ def get_playlist_id(token, username, playlist_id):
 def get_playlist_tracks(username, playlist_id, sp):
     '''
     input: username <string>, playlist_id <string>, sp <spotipy token>
-    output: the tracks for a playlist
+    output: the tracks for a playlist as a list
     '''
     results = sp.user_playlist_tracks(username, playlist_id)
     tracks = results['items']
