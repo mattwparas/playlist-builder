@@ -183,3 +183,45 @@ def transition_differences(audio_analysis_list):
 
     print(np.std(np.array(transitions)))
     print(np.mean(np.array(transitions)))
+
+
+#################### gotta snag the find_starting_segment in the other pacakge
+def analyze_pitch_distribution(audio_analysis_list, index):
+    '''
+    attempt to analyze pitch distribution at a given segment
+    '''
+    test_segment = find_starting_segment(audio_analysis_list[index])
+    print(audio_analysis_list[index]['track'])
+    # print(test_segment)
+    pitch_vector = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+
+    plt.style.use('default')
+    plt.xticks(list(range(len(test_segment['pitches']))), pitch_vector)
+    plt.plot(list(range(len(test_segment['pitches']))), test_segment['pitches'], 'o')
+    mean_pitch = np.mean(np.array(test_segment['pitches']))
+    pitch_sd = np.std(np.array(test_segment['pitches']))
+    plt.axvline(x=audio_analysis_list[index]['track']['key'], color = 'g')
+    plt.axhline(y=audio_analysis_list[index]['track']['key_confidence'])
+    # plt.axhline(y=mean_pitch, color='r')
+    # plt.axhline(y=mean_pitch + pitch_sd / 2, color = 'y')
+
+    pitches = []
+    for i in range(len(test_segment['pitches'])):
+        if test_segment['pitches'][i] >= mean_pitch + pitch_sd / 2:
+            pitches.append(i)
+
+    pitch_names = [pitch_vector[i] for i in pitches]
+    print(pitch_names)
+
+
+def plot_max_pitch_over_time(audio_ananlysis_list, index):
+    '''
+    plot max pitch over time
+    '''
+    current_song = audio_analysis_list[index]
+    # for segment in current_song['segments']:
+    print(current_song['segments'][index])
+    segment_times = [x['start'] for x in current_song['segments']]
+    pitch_values = [x['pitches'].index(max(x['pitches'])) for x in current_song['segments']]
+    plt.plot(segment_times, pitch_values, 'o')
+
