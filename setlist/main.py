@@ -5,6 +5,6 @@ class PlaylistTest(unittest.TestCase):
     def test2(self):
         self.assertEqual(True, True)
     def test3(self):
-        self.assertFalse(True, False)
+        self.assertFalse(True == False)
 
 if __name__== "__main__": unittest.main()
