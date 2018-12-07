@@ -1,4 +1,5 @@
-def evaluate_objective():
+
+def evaluate_objective(tour, distance_matrix):
     '''
     ###############TODO###############
 
@@ -13,7 +14,14 @@ def evaluate_objective():
             - 
 
     '''
-    return 1
+    # first and last element
+    total_distance = distance_matrix[tour[0], tour[-1]]
+    for i in range(len(tour) - 1):
+        node1 = tour[i]
+        node2 = tour[i + 1]
+        total_distance += distance_matrix[node1, node2]
+    return total_distance
+
 
 
 def swaps(tour):
@@ -28,16 +36,18 @@ def swaps(tour):
         for j in range(tour_length):
             node1 = tour[i]
             node2 = tour[j]
-            
-            test_tour = tour[:]
-            test_tour[i] = node2
-            test_tour[j] = node1
-            
-            test_objective = evaluate_objective(test_tour)
-            
+            tour[i] = node2
+            tour[j] = node1
+            # Check objective value
+            test_objective = evaluate_objective(tour)
+            # Compare objective values, update accordingly
             if test_objective < best_objective:
                 best_objective = test_objective
-                best_tour = test_tour[:]
+                best_tour = tour[:]
+            # reset to original ordering
+            else:
+                tour[i] = node1
+                tour[j] = node2
     return tour
     
 def perform_swaps(tour):
@@ -49,12 +59,11 @@ def perform_swaps(tour):
     best_tour = swaps(tour)
     current_objective = evaluate_objective(tour)
     while True:
-        swaps()
-        test_tour = tour[:]
-        current_objective = evaluate_objective(test_tour)
+        tour = swaps(tour)
+        current_objective = evaluate_objective(tour)
         if int(current_objective) == int(last_objective):
             best_objective = current_objective
-            best_tour = test_tour[:]
+            best_tour = tour[:]
             break
         else:
             last_objective = current_objective
