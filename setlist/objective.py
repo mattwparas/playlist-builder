@@ -1,4 +1,3 @@
-
 def evaluate_objective(tour, distance_matrix):
     '''
     ###############TODO###############
@@ -61,21 +60,11 @@ def perform_swaps(tour, distance_matrix):
     while True:
         tour = swaps(tour, distance_matrix)
         current_objective = evaluate_objective(tour, distance_matrix)
-        if int(current_objective) == int(last_objective):
+        if current_objective == last_objective:
             best_objective = current_objective
             best_tour = tour[:]
             break
         else:
             last_objective = current_objective
-
-    return best_tour
-
-
-
-def nearest_neighbor(tour, distance_matrix):
-
-    
-
-
 
     return best_tour
