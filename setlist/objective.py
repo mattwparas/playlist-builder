@@ -26,8 +26,9 @@ import matplotlib.pyplot as plt
 #     return total_distance
 
 class Fit_Regression(object):
-    def __init__ (self, playlist_feature_list, user_function):
+    def __init__ (self, playlist_feature_list, selected_feature, user_function):
         self.playlist_feature_list = playlist_feature_list
+        self.feature = selected_feature
         self.playlist_length = len(playlist_feature_list)
         self.tour = [x for x in range(self.playlist_length)]
         self.user_function = user_function
@@ -36,13 +37,14 @@ class Fit_Regression(object):
 
         # build distance matrix given songs and user defined function
         for user_index, value in enumerate(user_function):
-            for feature_index, feature_value in enumerate(self.playlist_feature_list):
-                distance = abs(value - feature_value)
+            for feature_index, feature_dict in enumerate(self.playlist_feature_list):
+                distance = abs(value - feature_dict[selected_feature])
                 distance_matrix[user_index, feature_index] = distance
 
         self.distance_matrix = distance_matrix
         self.reordered_features = self.playlist_feature_list
-        self.residuals = np.array(self.reordered_features) - np.array(self.user_function)
+        updated_feature_list = [x[self.feature] for x in self.reordered_features]
+        self.residuals = np.array(updated_feature_list) - np.array(self.user_function)
 
     def evaluate_objective(self):
         '''
@@ -99,14 +101,16 @@ class Fit_Regression(object):
 
         self.tour = best_tour
         self.reordered_features = [self.playlist_feature_list[x] for x in self.tour]
-        self.residuals = np.array(self.reordered_features) - np.array(self.user_function)
+        updated_feature_list = [x[self.feature] for x in self.reordered_features]
+        self.residuals = np.array(updated_feature_list) - np.array(self.user_function)
 
 
     def graph_results(self):
         # graph residuals
         plt.figure(figsize=(20, 5))
         # plt.ylim(-.5, .5)
-        plt.plot(list(range(len(self.reordered_features))), self.reordered_features, '-o')
+        updated_feature_list = [x[self.feature] for x in self.reordered_features]
+        plt.plot(list(range(len(updated_feature_list))), updated_feature_list, '-o')
         plt.plot(list(range(len(self.user_function))), self.user_function, '-o')
         # plt.plot(list(range(len(residuals))), residuals, '-o')
         # plt.ylim(0, 1)
