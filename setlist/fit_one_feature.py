@@ -41,11 +41,10 @@ feature_list = open_file("features.json")
 feature_values = [x for x in feature_list if x is not None]
 
 playist_length = len(feature_values)
-print(playist_length)
 
-# user_function = np.random.uniform(low = 0.3, size = playist_length)
+user_function = np.random.uniform(low = 0.3, size = playist_length)
 # sin
-# user_function = discrete_sin(playist_length, 4, min_value=0.3)
+user_function = discrete_sin(playist_length, 3, min_value=0.3)
 # user_function = np.linspace(.3, 1, num = playist_length)
 
 single_fit = Fit_Regression(feature_values, 'energy', user_function)
