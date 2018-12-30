@@ -1,9 +1,17 @@
 # playlist-builder
 
-A helpful tool to reorder your playlists optimally!
+A helpful tool to aid in reordering your Spotify playlists!
 
-Currently the files consist of a helper file (spotipy_test.py) that you can use to pull information from your profile via spotify. This file contains some functions to aid in making queries and also for plotting the data for visual inspection.
+## What is playlist-builder?
 
-There is also a Juptyer Notebook that contains an example of how to pull and save the data for further use. This will be updated with more information later.
+Have you ever had to put together a playlist for a party? Or maybe for getting amped up? Did you ever feel like the shuffle from Spotify let you down? That you had to skip one too many songs because it didn't fit the mood you wanted at that very moment?
 
-The goal of this project is to optimally order your playlist according to certain metrics. 
+That's where playlist-builder comes in.
+
+Spotify has all sorts of calculated metrics for songs, including 'energy', 'danceability', or 'valence'. Using these metrics, playlist-builder lets you take a playlist, and define a custom function for the flow of your playlist. No more relying on Spotify to shuffle and randomly pick what you want- playlist-builder will reorder the songs in your playlist to best fit the given function.
+
+Essentially, you can define the flow of your night.
+
+demographics.py includes plotting functions that let you understand the demographics of the playlist that you are working with.
+
+
