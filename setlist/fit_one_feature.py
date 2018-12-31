@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from save_data import *
 import os
 from get_data import *
+from functions import *
 
 
 # take as an input, some continuous function that can then be
@@ -18,21 +19,6 @@ from get_data import *
 
 # given user defined function
 
-def discrete_sin(num_points, periods, min_value=0, show_plot=False):
-    Fs = num_points
-    f = periods
-    sample = num_points
-    amplitude = (1 - min_value) / 2
-    intercept = 1 - amplitude
-    # x = np.linspace(0, sample, num = 34)
-    x = np.arange(num_points)
-    y = amplitude * np.sin(2 * np.pi * f * x / Fs) + intercept
-    if show_plot:
-        plt.plot(x, y, '-o')
-        plt.show()
-    return y
-
-
 # discrete_sin(35, min_value = 0.3, show_plot=True)
 
 
@@ -42,9 +28,9 @@ feature_values = [x for x in feature_list if x is not None]
 
 playist_length = len(feature_values)
 
-user_function = np.random.uniform(low = 0.3, size = playist_length)
+# user_function = np.random.uniform(low = 0.3, size = playist_length)
 # sin
-user_function = discrete_sin(playist_length, 3, min_value=0.3)
+user_function = discrete_sin(playist_length, 4, min_value=0.5)
 # user_function = np.linspace(.3, 1, num = playist_length)
 
 single_fit = Fit_Regression(feature_values, 'energy', user_function)
@@ -64,7 +50,7 @@ print(uris)
 
 # scope = 'playlist-modify-public'
 # username = "frog_bird"
-# playlist_name = "My Test Playlist"
+# playlist_name = "Test Playlist 2"
 # scope = 'playlist-read-private'
 
 # token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,
