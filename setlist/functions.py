@@ -7,11 +7,11 @@ def discrete_sin(num_points, periods, min_value=0, max_value = 1, show_plot=Fals
     Discretizes a sin function to the number of points specified
 
     Args:
-        num_points: The number of points for the function to be discretized to.
-        periods: The number of periods of the sin function.
-        min_value: The lower bound of the sin function, defaulted to 0
-        max_value: The upper bound of the sin function, defaulted to 1
-        show_plot: Bool to show the plot of the function, default to false
+        num_points (int): The number of points for the function to be discretized to.
+        periods (int): The number of periods of the sin function.
+        min_value (int, float): The lower bound of the sin function, defaulted to 0
+        max_value (int, float): The upper bound of the sin function, defaulted to 1
+        show_plot (bool): Bool to show the plot of the function, default to false
 
     Returns:
         A numpy array of the y values of the discretized sin function
@@ -33,14 +33,14 @@ def discrete_cos(num_points, periods, min_value=0, max_value = 1, show_plot=Fals
     Discretizes a sin function to the number of points specified
 
     Args:
-        num_points: The number of points for the function to be discretized to.
-        periods: The number of periods of the cos function.
-        min_value: The lower bound of the cos function, defaulted to 0
-        max_value: The upper bound of the cos function, defaulted to 1
-        show_plot: Bool to show the plot of the function, default to false
+        num_points (int): The number of points for the function to be discretized to.
+        periods (int): The number of periods of the cos function.
+        min_value (int, float): The lower bound of the cos function, defaulted to 0
+        max_value (int, float): The upper bound of the cos function, defaulted to 1
+        show_plot (bool): Bool to show the plot of the function, default to false
 
     Returns:
-        A numpy array of the y values of the discretized sin function
+        A numpy array of the y values of the discretized cos function
     '''
     Fs = num_points
     f = periods
@@ -59,12 +59,12 @@ def discrete_linear(num_points, min_value=0, max_value=1):
     Discretizes a linear function to the number of points specified
 
     Args:
-        num_points: The number of points for the function to be discretized to.
-        min_value: The lower bound of the function, defaulted to 0
-        max_value: The upper bound of the function, defaulted to 1
+        num_points (int): The number of points for the function to be discretized to.
+        min_value (int, float): The lower bound of the function, defaulted to 0
+        max_value (int, float): The upper bound of the function, defaulted to 1
 
     Returns:
-        A numpy array of the y values of the discretized sin function
+        A numpy array of the y values of the discretized linear function
     '''
     return np.linspace(min_value, max_value, num = num_points)
 
@@ -73,12 +73,12 @@ def discrete_random(num_points, min_value=0, max_value=1):
     Discretizes uniform function to the number of points specified
 
     Args:
-        num_points: The number of points for the function to be discretized to.
-        min_value: The lower bound of the function, defaulted to 0
-        max_value: The upper bound of the function, defaulted to 1
+        num_points (int): The number of points for the function to be discretized to.
+        min_value (int, float): The lower bound of the function, defaulted to 0
+        max_value (int, float): The upper bound of the function, defaulted to 1
 
     Returns:
-        A numpy array of the y values of the discretized sin function
+        A numpy array of the y values of the samples from the uniform distribution
     '''
     return np.random.uniform(low = min_value, high = max_value, size = num_points)
 
