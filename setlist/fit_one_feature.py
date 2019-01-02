@@ -6,6 +6,7 @@ from save_data import *
 import os
 from get_data import *
 from functions import *
+from demographics import *
 
 
 # take as an input, some continuous function that can then be
@@ -41,6 +42,10 @@ single_fit.graph_results()
 uris = [x['uri'] for x in single_fit.reordered_features]
 
 print(uris)
+
+
+feature_hist("energy", feature_list)
+
 
 
 

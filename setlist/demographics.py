@@ -10,17 +10,24 @@ features include:
 '''
 def feature_hist(feature_name, feature_list):
     '''
-    inputs:
-        feature_name: a feature that corresponds to one of the possible features
-        feature_list: a feature_list
-    output:
-        plots a histogram of the feature for the playlist with labels at the mean
+    Generates a histogram of the given feature for a playlist
+
+    Args:
+        feature_name (string): a feature that corresponds to one of the possible features from Spotify's API
+        feature_list (list): a json response from Spotify - a list of feature responses from Spotify
+    Returns:
+        None
     '''
+
     feature_values = [track[feature_name] for track in feature_list if track is not None]
     mean_value = np.mean(np.array(feature_values))
     sd_value = np.std(np.array(feature_values))
-    plt.hist(feature_values, align = 'mid', alpha = 0.9, 
-             weights=np.ones_like(feature_values)/np.sum(feature_values))
+    if feature_name == "tempo":
+        range_values = None
+    else:
+        range_values = (0,1)
+    plt.hist(feature_values, align = 'mid', alpha = 0.9, range = range_values,
+             weights=np.ones_like(feature_values)/len(feature_values))
     plt.xlabel(feature_name)
     plt.ylabel('Frequency')
     plt.title("Histogram of " + feature_name + ": Mean = " + 
@@ -32,7 +39,12 @@ def feature_hist(feature_name, feature_list):
 
 def popularity_hist(track_list):
     '''
-    takes a track list and outputs a histogram of the popularities within the song
+    Generates a histogram of the popularity for a playlist
+
+    Args:
+        track_list (list): the JSON response from Spotify, consisting of a track list
+    Returns:
+        None
     '''
     # popularity metrics
     popularity_values = [track['track']['popularity'] for track in track_list if track is not None]
@@ -44,7 +56,13 @@ def popularity_hist(track_list):
 
 def loudness_plot(audio_analysis):
     '''
-    given an audio analysis, returns a plot of the loudness, with sections marked and the fade out marked
+    Returns a plot of the loudness, with sections marked and the fade out marked
+
+    Args:
+        audio_analysis (dict): the JSON response from Spotify, consisting of the audio analysis 
+        for a single song
+    Returns:
+        None
     '''
     # ignore beginning and end
     time_list = []
@@ -88,7 +106,13 @@ def loudness_plot(audio_analysis):
 
 def tatum_plot(audio_analysis):
     '''
-    plots the tatum of a song over time given audio analysis
+    Plots the tatum of a song over time given audio analysis
+
+    Args:
+        audio_analysis (dict): The JSON response from Spotify, consisting of the audio analysis 
+        for single song
+    Returns:
+        None
     '''
     tatums = audio_analysis['tatums']
     start_times = [x['start'] for x in tatums]
@@ -104,7 +128,13 @@ def tatum_plot(audio_analysis):
 
 def feature_diagnostic_plot(feature_list, selected_feature):
     '''
-    given a feature list (from a playlist), plots that feature vs track # in playlist
+    Plots that feature vs track # in playlist
+
+    Args:
+        selected_feature (string): a feature that corresponds to one of the possible features from Spotify's API
+        feature_list (list): a json response from Spotify - a list of feature responses from Spotify
+    Returns:
+        None
     '''
     feature_values = [track[selected_feature] for track in feature_list if track is not None]
     plt.plot(list(range(len(feature_values))), feature_values, '-o')
@@ -114,7 +144,12 @@ def feature_diagnostic_plot(feature_list, selected_feature):
 
 def tempo_plot(audio_analysis):
     '''
-    plots the tempo vs time
+    Plots the tempo vs time for a single song
+    Args:
+        audio_analysis (dict): The JSON response from Spotify, consisting of the audio analysis 
+        for single song
+    Returns:
+        None
     '''
     sections = audio_analysis['sections']
     start_times = [x['start'] for x in sections]
