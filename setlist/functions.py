@@ -54,6 +54,7 @@ def discrete_cos(num_points, periods, min_value=0, max_value = 1, show_plot=Fals
         plt.show()
     return y
 
+
 def discrete_linear(num_points, min_value=0, max_value=1):
     '''
     Discretizes a linear function to the number of points specified
