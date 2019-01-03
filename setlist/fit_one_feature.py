@@ -31,7 +31,16 @@ playist_length = len(feature_values)
 
 # user_function = np.random.uniform(low = 0.3, size = playist_length)
 # sin
-user_function = discrete_cos(playist_length, 4, min_value=0.5)
+# user_function = discrete_sin(playist_length, 5, min_value=0.5, max_value=0.9)
+
+# user_function = discrete_beta(playist_length, 2, 6, min_value=0.5, max_value=0.9)
+
+user_function = discrete_normal(playist_length, min_value=.5, max_value=.9)
+
+
+# discrete_beta(50, 2, 6, min_value=0.3, max_value=.8, show_plot=True)
+# discrete_normal(50, min_value=.5, max_value=.9, show_plot=True)
+
 # user_function = np.linspace(.3, 1, num = playist_length)
 
 single_fit = Fit_Regression(feature_values, 'energy', user_function)
@@ -44,8 +53,6 @@ uris = [x['uri'] for x in single_fit.reordered_features]
 print(uris)
 
 
-feature_hist("energy", feature_list)
-
 
 
 
@@ -53,9 +60,8 @@ feature_hist("energy", feature_list)
 # SPOTIPY_CLIENT_SECRET = os.environ['MY_CLIENT_SECRET']
 # SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
 
-# scope = 'playlist-modify-public'
 # username = "frog_bird"
-# playlist_name = "Test Playlist 2"
+# playlist_name = "Test Playlist 3"
 # scope = 'playlist-read-private'
 
 # token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,

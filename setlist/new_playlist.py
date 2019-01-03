@@ -18,9 +18,9 @@ SPOTIPY_CLIENT_ID = os.environ['MY_CLIENT_ID']
 SPOTIPY_CLIENT_SECRET = os.environ['MY_CLIENT_SECRET']
 SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
 
-scope = 'playlist-modify-public'
+# scope = 'playlist-modify-public'
 username = "frog_bird"
-playlist_name = "Test Playlist 2"
+playlist_name = "Groove"
 scope = 'playlist-read-private'
 
 token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,

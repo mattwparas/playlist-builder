@@ -8,17 +8,18 @@ SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
 # scope = 'playlist-modify-public'
 username = "frog_bird" # your username here
 playlist_name = "Test Playlist 2" # your playlist name here
-scope = 'playlist-read-private'
+scope = 'playlist-read-private' # adjust scope as needed
 
 token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,
 client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI)
 
+# gets the ID associated with the playlist name and the spotipy object for this token
 playlistid, spot = get_playlist_id(token, username, playlist_name)
 
 # get tracks from the playlist first
 tracklist = get_playlist_tracks(username, playlistid, spot)
 
-# get feature for the playlist
+# get features for the playlist
 features = get_features(tracklist, spot)
 
 # clean the response
