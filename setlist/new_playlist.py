@@ -20,7 +20,7 @@ SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
 
 # scope = 'playlist-modify-public'
 username = "frog_bird"
-playlist_name = "Groove"
+playlist_name = "DM"
 scope = 'playlist-read-private'
 
 token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,
@@ -37,6 +37,8 @@ save_to_json("features.json", features)
 
 # remove playlist tracks
 print(features[0])
+
+print(len(features))
 
 # make recursive mark down thing for ethan
 

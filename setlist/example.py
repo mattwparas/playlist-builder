@@ -1,14 +1,14 @@
 import os
 from get_data import *
+from functions import *
 
 SPOTIPY_CLIENT_ID = os.environ['MY_CLIENT_ID']
 SPOTIPY_CLIENT_SECRET = os.environ['MY_CLIENT_SECRET']
 SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
 
-# scope = 'playlist-modify-public'
 username = "frog_bird" # your username here
-playlist_name = "Test Playlist 2" # your playlist name here
-scope = 'playlist-read-private' # adjust scope as needed
+playlist_name = "Test Playlist" # your playlist name here
+scope = 'playlist-read-private' # adjust scope as needed, see spotipy docs
 
 token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,
 client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI)

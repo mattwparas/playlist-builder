@@ -1,9 +1,10 @@
 def find_ending_segment(audio_analysis):
     '''
-    step backwards in the segments until there is segment with a signficant loudness_start or loudness_max
-    Find the significant values
-    input: audio analysis for a specific song
-    output: segment at which the audio is ending (fades out at)
+    Steps backwards in the segments until there is segment with a signficant loudness
+    Args:
+        audio_analysis (JSON response): audio analysis for a single song
+    Returns: 
+        Segment at which the audio is ending (fades out at)
     '''
 
     threshold = -40
@@ -18,9 +19,11 @@ def find_ending_segment(audio_analysis):
 
 def find_starting_segment(audio_analysis):
     '''
-    step forwards in the segments until there is a segment with a significant loudness
-    input: audio analysis for a specific song
-    output: segment at which the audio is starting (first significant sound)
+    Step forwards in the segments until there is a segment with a significant loudness
+    Args:
+        audio analysis (JSON response): audio analysis for a specific song
+    Returns: 
+        Segment at which the audio is starting (first significant sound)
     '''
 
     fade_in_time = audio_analysis['track']['end_of_fade_in']
