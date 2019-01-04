@@ -8,15 +8,14 @@ import os
 
 def get_playlist_id(token, username, playlist_id):
     '''
-    inputs: 
+    Gets the playlist id and the spotipy instance for a given username and playlist name
+    Args: 
         token: authentication token
-        username: string, spotify username
-        playlist_id: string, playlist name
-    
-    returns:
+        username (string): string, spotify username
+        playlist_id (string): playlist name
+    Returns:
         pid: playlist id
         sp: spotipy instance
-
     '''
     if token:
         sp = spotipy.Spotify(auth=token)
@@ -35,8 +34,13 @@ def get_playlist_id(token, username, playlist_id):
 
 def get_playlist_tracks(username, playlist_id, sp):
     '''
-    input: username <string>, playlist_id <string>, sp <spotipy token>
-    output: the tracks for a playlist as a list
+    Returns the tracklist for a given username and playlist id
+    Args:
+        username (string): the Spotify username
+        playlist_id (string): the playlist_id (usually returned from get_playlist_id)
+        sp (spotipy token): spotipy instance with associated authentication token
+    Returns:
+        The tracks for a playlist as a list
     '''
     results = sp.user_playlist_tracks(username, playlist_id)
     tracks = results['items']
@@ -48,7 +52,13 @@ def get_playlist_tracks(username, playlist_id, sp):
 
 def get_features(playlist, sp):
     '''
-    takes the playlist tracks and a spotipy token and returns the features for each song
+    Takes the playlist tracks and a spotipy token and returns the features for each song
+
+    Args:
+        playlist (list of tracks): A list of tracks from spotify
+        sp (spotipy object): spotipy instance/object
+    Returns:
+        A list of feature responses from Spotify
     '''
     playlist_uris = [item['track']['uri'] for item in playlist]
     number_of_songs = len(playlist_uris)
@@ -66,7 +76,15 @@ def get_features(playlist, sp):
 
 def get_audio_analysis(uri, sp):
     '''
-    returns the audio analysis for the given song URI
+    Returns the audio analysis for the given song URI
+
+    Args:
+        uri (string): a song URI (information on spotify's API about URIs)
+        sp (spotipy instance): a spotipy token
+    
+    Returns:
+        The audio analysis for a single song (JSON response from Spotify)
+
     '''
     start = time.time()
     analysis = sp.audio_analysis(uri)
@@ -80,6 +98,9 @@ def get_audio_analysis(uri, sp):
 
 
 def make_new_playlist(playlist_name, is_public=True, tracks = None):
+    '''
+    Deprecated, ignore
+    '''
     if(is_public):
         modify_scope = "playlist-modify-public"
     else:
@@ -90,13 +111,19 @@ def make_new_playlist(playlist_name, is_public=True, tracks = None):
     spot.user_playlist_create(username, playlist_name, public=is_public)
     return
 
-# make_new_playlist("My Test Playlist")
-
-# def add_tracks_to_playlist(playlist_name):
-#     return
-
 
 def get_playlist_audio_analysis(list_of_uris, sp):
+    '''
+    Returns a list of audio analyses for a list of given URIs.
+    Sleeps for one second in between each call to avoid errors with Spotify
+
+    Args:
+        list_of_uris (list of strings): a list of Spotify URIs
+        sp (spotipy instance): spotipy token
+    
+    Returns:
+        A list of audio analyses
+    '''
     audio_analysis_output = []
     for uri in list_of_uris:
         time.sleep(1)

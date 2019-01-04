@@ -1,30 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# def evaluate_objective(tour, distance_matrix):
-#     '''
-#     ###############TODO###############
-
-#     Step 1: build distance matrix for transitions
-#     Step 2: build dynamic cost as a function of the transitions and their place within the algorithm
-#             - this can be some sort of tuning parameter that we assign at the beginning
-#             - energy levels, danceability levels - assigned by looking holistically at the entire tour
-#     Step 3: Perform preprocessing - separate and combine ideal pairings:
-#             - songs that occur on the same album back to back - ideally matched to be back to back
-#             - songs that are extremely popular RIGHT NOW (global popularity)
-#             - songs that are extremely popular to you individually (local popularity)
-#             - 
-
-#     '''
-#     # first and last element
-#     total_distance = distance_matrix[tour[0], tour[-1]]
-#     total_distance = 0
-#     for i in range(len(tour) - 1):
-#         node1 = tour[i]
-#         node2 = tour[i + 1]
-#         total_distance += distance_matrix[node1, node2]
-#     return total_distance
-
 class Fit_Regression(object):
     def __init__ (self, playlist_feature_list, selected_feature, user_function):
         self.playlist_feature_list = playlist_feature_list
@@ -119,62 +95,3 @@ class Fit_Regression(object):
     def pprint(self):
         print("Objective Value:", self.evaluate_objective())
         print("Tour:", self.tour)
-
-
-
-
-# def evaluate_objective(tour, distance_matrix, user_function):
-#     '''
-#     objective for single feature fitting
-#     '''
-#     cost = 0
-#     for index, value in enumerate(user_function):
-#         cost += distance_matrix[index, tour[index]]
-
-#     return cost
-
-# def swaps(tour, distance_matrix, user_function):
-#     '''
-#     one iteration of a swap (2-opt)
-#     '''
-#     best_tour = tour[:]
-#     best_objective = evaluate_objective(best_tour, distance_matrix, user_function)
-#     tour_length = len(tour)
-    
-#     for i in range(tour_length):
-#         for j in range(tour_length):
-#             node1 = tour[i]
-#             node2 = tour[j]
-#             tour[i] = node2
-#             tour[j] = node1
-#             # Check objective value
-#             test_objective = evaluate_objective(tour, distance_matrix, user_function)
-#             # Compare objective values, update accordingly
-#             if test_objective < best_objective:
-#                 best_objective = test_objective
-#                 best_tour = tour[:]
-#             # reset to original ordering
-#             else:
-#                 tour[i] = node1
-#                 tour[j] = node2
-#     return tour
-    
-# def perform_swaps(tour, distance_matrix, user_function):
-#     '''
-#     perform swaps on the tour until the objective value does not change
-#     '''
-#     # initialize swaps
-#     last_objective = evaluate_objective(tour, distance_matrix, user_function)
-#     best_tour = swaps(tour, distance_matrix, user_function)
-#     current_objective = evaluate_objective(tour, distance_matrix, user_function)
-#     while True:
-#         tour = swaps(tour, distance_matrix, user_function)
-#         current_objective = evaluate_objective(tour, distance_matrix, user_function)
-#         if current_objective == last_objective:
-#             best_objective = current_objective
-#             best_tour = tour[:]
-#             break
-#         else:
-#             last_objective = current_objective
-
-#     return best_tour
