@@ -12,6 +12,34 @@ Spotify has all sorts of calculated metrics for songs, including 'energy', 'danc
 
 Essentially, you can define the flow of your night.
 
-demographics.py includes plotting functions that let you understand the demographics of the playlist that you are working with.
+## How to use it
+
+In order to use playlist-builder you need to obtain a Spotify Developer Client ID and Secret (look at Spotipy's docs for help with this if you need it).
+
+Once you obtain a client secret and client ID you can then begin fitting your playlist to a generated function.
+
+## Fitting Functions
+
+demographics.py includes plotting functions that let you understand the demographics of the playlist that you are working with. For example, here is a generated histogram for the energy levels within a playlist:
+
+########## Insert histogram image #############
+
+You can also see how the energy level of your playlist changes over time if you were to play it from start to finish:
+
+########## Insert energy vs track number ###########
+
+We can then generate functions to then "fit" the playlist to. For instance, here is an example of a generated sin curve:
+
+########## Insert sin wave ############
+
+We can then reorder the playlist to fit this function as such:
+
+########## Insert fitted plot ########
+
+At this point we can then send the playlist back to Spotify to reorder your playlist.
+
+Note, this will remove all of your metadata associated with the songs (i.e. date added to playlist). If this is important to you, push the new changes to a different playlist.
+
+
 
 
