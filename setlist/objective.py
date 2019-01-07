@@ -19,8 +19,6 @@ class Fit_Regression(object):
 
         self.distance_matrix = distance_matrix
         self.reordered_features = self.playlist_feature_list
-        updated_feature_list = [x[self.feature] for x in self.reordered_features]
-        self.residuals = np.array(updated_feature_list) - np.array(self.user_function)
 
     def evaluate_objective(self):
         '''
@@ -77,19 +75,13 @@ class Fit_Regression(object):
 
         self.tour = best_tour
         self.reordered_features = [self.playlist_feature_list[x] for x in self.tour]
-        updated_feature_list = [x[self.feature] for x in self.reordered_features]
-        self.residuals = np.array(updated_feature_list) - np.array(self.user_function)
-
 
     def graph_results(self):
-        # graph residuals
         plt.figure(figsize=(20, 5))
-        # plt.ylim(-.5, .5)
         updated_feature_list = [x[self.feature] for x in self.reordered_features]
-        plt.plot(list(range(len(updated_feature_list))), updated_feature_list, '-o')
-        plt.plot(list(range(len(self.user_function))), self.user_function, '-o')
-        # plt.plot(list(range(len(residuals))), residuals, '-o')
-        # plt.ylim(0, 1)
+        plt.plot(list(range(self.playlist_length)), updated_feature_list, '-o')
+        plt.plot(list(range(self.playlist_length)), self.user_function, '-o')
+        plt.xlabel("Track Number")
         plt.show()
 
     def pprint(self):
