@@ -20,7 +20,7 @@ SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
 
 # scope = 'playlist-modify-public'
 username = "frog_bird"
-playlist_name = "Jam"
+playlist_name = "Groove"
 scope = 'playlist-read-private'
 
 token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,

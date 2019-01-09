@@ -8,6 +8,7 @@ class Fit_Regression(object):
         self.playlist_length = len(playlist_feature_list)
         self.tour = [x for x in range(self.playlist_length)]
         self.user_function = user_function
+        self.swap_count = 0
 
         distance_matrix = np.zeros((self.playlist_length, self.playlist_length))
 
@@ -27,7 +28,6 @@ class Fit_Regression(object):
         cost = 0
         for index, value in enumerate(self.user_function):
             cost += self.distance_matrix[index, self.tour[index]]
-
         return cost
 
     def swaps(self):
@@ -37,6 +37,7 @@ class Fit_Regression(object):
         best_tour = self.tour[:]
         best_objective = self.evaluate_objective()
         tour_length = len(self.tour)
+
         
         for i in range(tour_length):
             for j in range(tour_length):
@@ -50,6 +51,7 @@ class Fit_Regression(object):
                 if test_objective < best_objective:
                     best_objective = test_objective
                     best_tour = self.tour[:]
+                    self.swap_count += 1
                 # reset to original ordering
                 else:
                     self.tour[i] = node1
@@ -60,6 +62,7 @@ class Fit_Regression(object):
         perform swaps on the tour until the objective value does not change
         '''
         # initialize swaps
+        self.swap_count = 0
         last_objective = self.evaluate_objective()
         best_tour = self.swaps()
         current_objective = self.evaluate_objective()
@@ -72,7 +75,6 @@ class Fit_Regression(object):
                 break
             else:
                 last_objective = current_objective
-
         self.tour = best_tour
         self.reordered_features = [self.playlist_feature_list[x] for x in self.tour]
 
@@ -87,3 +89,4 @@ class Fit_Regression(object):
     def pprint(self):
         print("Objective Value:", self.evaluate_objective())
         print("Tour:", self.tour)
+        print("Swap Count:", self.swap_count)
