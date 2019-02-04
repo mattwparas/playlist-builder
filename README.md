@@ -22,19 +22,25 @@ Once you obtain a client secret and client ID you can then begin fitting your pl
 
 demographics.py includes plotting functions that let you understand the demographics of the playlist that you are working with. For example, here is a generated histogram for the energy levels within a playlist:
 
-########## Insert histogram image #############
+<p align="center">
+  <img src="images/energyhist.png" width="70%">
+</p>
 
 You can also see how the energy level of your playlist changes over time if you were to play it from start to finish:
 
-########## Insert energy vs track number ###########
+<p align="center">
+  <img src="images/energyvstrack.png" width="70%">
+</p>
 
 We can then generate functions to then "fit" the playlist to. For instance, here is an example of a generated sin curve:
 
-########## Insert sin wave ############
+<p align="center">
+  <img src="images/sinewave.png" width="70%">
+</p>
 
 We can then reorder the playlist to fit this function as such:
 
-########## Insert fitted plot ########
+![AltText](images/fittedcurve.png "Title")
 
 At this point we can then send the playlist back to Spotify to reorder your playlist.
 
