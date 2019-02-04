@@ -2,7 +2,7 @@
 # import numpy as np
 from objective import Fit_Regression
 # import matplotlib.pyplot as plt
-# from save_data import *
+from save_data import *
 # import os
 from get_data import *
 from functions import *
@@ -11,7 +11,7 @@ import math
 import time
 
 
-feature_list = open_file("features.json")
+feature_list = open_file("saved_playlists/features.json")
 
 feature_values = [x for x in feature_list if x is not None]
 
@@ -60,7 +60,6 @@ else:
 
 	if current_batch == number_of_batches and j < playist_length:
 		spot.user_playlist_add_tracks(username, playlistid, users[j:])
-		# print("marking to the end", j)
 
 
 

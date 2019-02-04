@@ -9,7 +9,7 @@ SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
 
 # scope = 'playlist-modify-public'
 username = "frog_bird"
-playlist_name = "WOOP"
+playlist_name = "DM"
 scope = 'playlist-read-private'
 
 token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,
@@ -38,9 +38,11 @@ for path in files_to_remove:
 	path = 'saved_playlists/' + path
 	if os.path.exists(path):
 		print("The file", path, "does exist")
-	    # os.remove(path)
+		os.remove(path)
 	else:
 	    print("The file,", path, "does not exist")
+	    print("Saving to", path)
+
 
 save_to_json("saved_playlists/features.json", features)
 

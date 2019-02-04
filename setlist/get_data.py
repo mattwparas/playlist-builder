@@ -27,6 +27,7 @@ def get_playlist_id(token, username, playlist_id):
                 print(pid)
     else:
         print("Can't get token for", username)
+        return
     
     return pid, sp
 
