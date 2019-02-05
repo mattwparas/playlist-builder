@@ -3,7 +3,7 @@
 from objective import Fit_Regression
 # import matplotlib.pyplot as plt
 from save_data import *
-# import os
+import os
 from get_data import *
 from functions import *
 from demographics import *
@@ -13,53 +13,21 @@ import time
 
 feature_list = open_file("saved_playlists/features.json")
 
-feature_values = [x for x in feature_list if x is not None]
+# feature_values = [x for x in feature_list if x is not None]
 
-playist_length = len(feature_values)
+playist_length = len(feature_list)
 
 user_function = discrete_sin(playist_length, 4, min_value=0.5, max_value=0.9)
 
-single_fit = Fit_Regression(feature_values, 'energy', user_function)
+single_fit = Fit_Regression(feature_list, 'energy', user_function)
 single_fit.perform_swaps()
 single_fit.pprint()
 single_fit.graph_results()
 
 uris = [x['uri'] for x in single_fit.reordered_features]
 
-SPOTIPY_CLIENT_ID = os.environ['MY_CLIENT_ID']
-SPOTIPY_CLIENT_SECRET = os.environ['MY_CLIENT_SECRET']
-SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
 
-username = "frog_bird"
-playlist_name = "Test Groove"
-scope = 'playlist-read-private'
-
-token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,
-                                   client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI)
-
-playlistid, spot = get_playlist_id(token, username, playlist_name)
-
-if playist_length <= 100:
-	pass
-    spot.user_playlist_replace_tracks(username, playlistid, uris)
-else:
-
-	batch_size = 100
-	number_of_batches = math.floor(playist_length / batch_size)
-	print(number_of_batches)
-
-	current_batch = 1
-	i = 0
-	j = 100
-
-	while current_batch < number_of_batches:
-		spot.user_playlist_add_tracks(username, playlistid, uris[i:j])
-		i += 100
-		j += 100
-		current_batch += 1
-
-	if current_batch == number_of_batches and j < playist_length:
-		spot.user_playlist_add_tracks(username, playlistid, users[j:])
+# push_to_playlist(uris, "frog_bird", "testplaylisttest")
 
 
 

@@ -20,11 +20,16 @@ def get_playlist_id(token, username, playlist_id):
     if token:
         sp = spotipy.Spotify(auth=token)
         results = sp.current_user_playlists()
+        pid = False
         for item in results['items']:
             track = item['name']
             if(track == playlist_id):
                 pid = item['uri']
-                print(pid)
+                print('PlaylistID found:', pid)
+        if not pid:
+            print("The given playlist,", playlist_id, "does not exist")
+            sys.exit(-1)
+            return 0
     else:
         print("Can't get token for", username)
         return
@@ -131,3 +136,54 @@ def get_playlist_audio_analysis(list_of_uris, sp):
         print(uri)
         audio_analysis_output.append(get_audio_analysis(uri, sp))
     return audio_analysis_output
+
+def push_to_playlist(uris, username, playlist_name, scope = 'playlist-read-private'):
+    '''
+    Replaces the tracks in a given playlist in the given order of uris
+
+    Args:
+        uris (list of strings): a list of Spotify URIs
+        username (string): spotify username
+        playlist_name (string): playlist_name associated with given username
+        scope (string): Authentication scope, defaulted to playlist-read-private
+
+    Returns:
+        None, modifies the given playlist with new songs
+    '''
+    SPOTIPY_CLIENT_ID = os.environ['MY_CLIENT_ID']
+    SPOTIPY_CLIENT_SECRET = os.environ['MY_CLIENT_SECRET']
+    SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
+
+    playist_length = len(uris)
+
+    token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,
+                                       client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI)
+
+    playlistid, spot = get_playlist_id(token, username, playlist_name)
+
+    print("Pushing songs to playlist at", playlistid, "...")
+
+    if playist_length <= 100:
+        pass
+        spot.user_playlist_replace_tracks(username, playlistid, uris)
+    else:
+
+        batch_size = 100
+        number_of_batches = math.floor(playist_length / batch_size)
+        print(number_of_batches)
+
+        current_batch = 1
+        i = 0
+        j = 100
+
+        while current_batch < number_of_batches:
+            spot.user_playlist_add_tracks(username, playlistid, uris[i:j])
+            i += 100
+            j += 100
+            current_batch += 1
+
+        if current_batch == number_of_batches and j < playist_length:
+            spot.user_playlist_add_tracks(username, playlistid, users[j:])
+
+    print("Finished!")
+    return
