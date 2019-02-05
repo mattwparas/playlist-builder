@@ -11,9 +11,10 @@ import math
 import time
 
 
-feature_list = open_file("saved_playlists/features.json")
+# save_playlist_information("frog_bird", "DM")
 
-# feature_values = [x for x in feature_list if x is not None]
+
+feature_list = open_file("saved_playlists/features.json")
 
 playist_length = len(feature_list)
 
@@ -27,7 +28,7 @@ single_fit.graph_results()
 uris = [x['uri'] for x in single_fit.reordered_features]
 
 
-# push_to_playlist(uris, "frog_bird", "testplaylisttest")
+push_to_playlist(uris, "frog_bird", "testplaylisttest")
 
 
 

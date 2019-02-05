@@ -5,6 +5,8 @@ import pprint
 import math
 import time
 import os
+import os.path
+from save_data import *
 
 def get_playlist_id(token, username, playlist_id):
     '''
@@ -187,3 +189,57 @@ def push_to_playlist(uris, username, playlist_name, scope = 'playlist-read-priva
 
     print("Finished!")
     return
+
+
+def save_playlist_information(username, playlist_name, scope = "playlist-read-private"):
+    '''
+    Description
+
+    Args:
+
+    Returns:
+
+    '''
+    SPOTIPY_CLIENT_ID = os.environ['MY_CLIENT_ID']
+    SPOTIPY_CLIENT_SECRET = os.environ['MY_CLIENT_SECRET']
+    SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
+
+    token = util.prompt_for_user_token(username, scope, client_id=SPOTIPY_CLIENT_ID,
+    client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI)
+
+    playlistid, spot = get_playlist_id(token, username, playlist_name)
+
+    # get tracks from the playlist first
+    tracklist = get_playlist_tracks(username, playlistid, spot)
+    tracklist = [x for x in tracklist if x is not None]
+
+    if tracklist:
+        print("Successfully acquired tracklist information!")
+
+    # get features from the playlist next
+    features = get_features(tracklist, spot)
+    features = [x for x in features if x is not None]
+
+    if features:
+        print("Successfully acquired feature information!")
+
+    files_to_remove = ['features.json', 'tracklist.json']
+
+    for path in files_to_remove:
+        path = 'saved_playlists/' + path
+        if os.path.exists(path):
+            print("The file", path, "does exist")
+            os.remove(path)
+        else:
+            print("The file,", path, "does not exist")
+            print("Saving to", path)
+
+
+    save_to_json("saved_playlists/features.json", features)
+
+    save_to_json("saved_playlists/tracklist.json", tracklist)
+
+    return
+
+
+
