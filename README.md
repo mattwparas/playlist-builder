@@ -25,9 +25,9 @@ import os
 from get_data import *
 from functions import *
 
-SPOTIPY_CLIENT_ID = os.environ['MY_CLIENT_ID']
-SPOTIPY_CLIENT_SECRET = os.environ['MY_CLIENT_SECRET']
-SPOTIPY_REDIRECT_URI = 'http://localhost:8888/'
+SPOTIPY_CLIENT_ID = os.environ['MY_CLIENT_ID'] # your client ID here
+SPOTIPY_CLIENT_SECRET = os.environ['MY_CLIENT_SECRET'] # your client secret here
+SPOTIPY_REDIRECT_URI = 'http://localhost:8888/' # your redirect URI here
 
 username = "frog_bird" # your username here
 playlist_name = "Test Playlist" # your playlist name here
