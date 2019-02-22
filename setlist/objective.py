@@ -1,4 +1,4 @@
-import numpy as np
+# import numpy as np
 import matplotlib.pyplot as plt
 
 class Fit_Regression(object):
@@ -10,13 +10,15 @@ class Fit_Regression(object):
         self.user_function = user_function
         self.swap_count = 0
 
-        distance_matrix = np.zeros((self.playlist_length, self.playlist_length))
+        # distance_matrix = np.zeros((self.playlist_length, self.playlist_length))
+
+        distance_matrix = [[0 for x in range(self.playlist_length)] for row in range(self.playlist_length)]
 
         # build distance matrix given songs and user defined function
         for user_index, value in enumerate(user_function):
             for feature_index, feature_dict in enumerate(self.playlist_feature_list):
                 distance = abs(value - feature_dict[selected_feature])
-                distance_matrix[user_index, feature_index] = distance
+                distance_matrix[user_index][feature_index] = distance
 
         self.distance_matrix = distance_matrix
         self.reordered_features = self.playlist_feature_list
@@ -27,14 +29,14 @@ class Fit_Regression(object):
         '''
         cost = 0
         for index, value in enumerate(self.user_function):
-            cost += self.distance_matrix[index, self.tour[index]]
+            cost += self.distance_matrix[index][self.tour[index]]
         return cost
 
     def swaps(self):
         '''
         one iteration of a swap (2-opt)
         '''
-        best_tour = self.tour[:]
+        # best_tour = self.tour[:]
         best_objective = self.evaluate_objective()
         tour_length = len(self.tour)
 
@@ -50,7 +52,7 @@ class Fit_Regression(object):
                 # Compare objective values, update accordingly
                 if test_objective < best_objective:
                     best_objective = test_objective
-                    best_tour = self.tour[:]
+                    # best_tour = self.tour[:]
                     self.swap_count += 1
                 # reset to original ordering
                 else:
@@ -64,18 +66,18 @@ class Fit_Regression(object):
         # initialize swaps
         self.swap_count = 0
         last_objective = self.evaluate_objective()
-        best_tour = self.swaps()
+        # best_tour = self.swaps()
         current_objective = self.evaluate_objective()
         while True:
             tour = self.swaps()
             current_objective = self.evaluate_objective()
             if current_objective == last_objective:
                 best_objective = current_objective
-                best_tour = self.tour[:]
+                # best_tour = self.tour[:]
                 break
             else:
                 last_objective = current_objective
-        self.tour = best_tour
+        # self.tour = best_tour
         self.reordered_features = [self.playlist_feature_list[x] for x in self.tour]
 
     def graph_results(self):
@@ -84,6 +86,8 @@ class Fit_Regression(object):
         plt.plot(list(range(self.playlist_length)), updated_feature_list, '-o')
         plt.plot(list(range(self.playlist_length)), self.user_function, '-o')
         plt.xlabel("Track Number")
+        plt.ylabel("Value")
+        plt.title(self.feature + " vs Track Number")
         plt.show()
 
     def pprint(self):
